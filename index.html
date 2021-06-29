@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Load the Paper.js library -->
+<!--cript type="text/javascript" src="js/paper.js"></script> -->
+<!-- Load external PaperScript and associate it with myCanvas -->
+<!--script type="text/paperscript" src="js/toyscript.js" canvas="myCanvas"> -->
+<script type="text/javascript" src="svg-inject-master/dist/svg-inject.js"></script>
+<script type="text/javascript" src="js/paper.js"></script>
+<!-- <script type="text/javascript" src="js/init.js"></script> -->
+<script type="text/javascript">
+ SVGInject.setOptions({
+      useCache: false, // no caching
+      copyAttributes: false, // do not copy attributes from `<img>` to `<svg>`
+      makeIdsUnique: false, // do not make ids used within the SVG unique
+      afterLoad: function(svg, svgString) {
+        // add a class to the svg
+        //svg.classList.add('my-class');
+        svg.classList.add('uicontainer');
+      },
+      beforeInject: function(img, svg) {
+        // wrap SVG in a div element
+        var div = document.createElement('div');
+        div.appendChild(svg);
+        return div;
+      },
+      afterInject: function(img, svg) {
+        // set opacity
+        svg.style.opacity = 1;
+        initUI();
+      },
+      onFail: function(img) {
+        // set the image background red
+        img.style.background = 'red';
+      }
+    });
+    var dispatch = {
+        empty: () => { console.log("empty called"); },
+        test: () => { console.log("test called"); },
+    };
+// entry point function for registering UI interaction functions
+// these will be called based on the UI element ID in the svg file.
+// TODO: add code to register new UI svg files for additional controls 
+// added by the sub documents. -> add svg element and register its inlinig using the
+// handy library. Then let the registration code hook up the interaction
+
+function registerEventHandler(entryPoint, entryFun) {
+    dispatch[entryPoint] = entryFun;
+}
+
+function initUI() {
+    var uicontainter = document.getElementsByClassName("uicontainer");
+    console.log(uicontainter)
+    console.log(uicontainter.item(0).children)
+    var svgElms = uicontainter.item(0).children[0].childNodes;
+    svgElms.forEach((element, index, array) => { 
+        idName = element.id;
+        if(idName) {
+            console.log(idName);
+            element.classList.add("svgButton");
+            element.addEventListener("click", (evt)=> {
+                console.log("pressed:"+evt.currentTarget.id)
+                dispatch[evt.currentTarget.id]();
+            });
+        }
+    });
+
+    //uicontainter.
+}
+//window.onload = initUI();
+//if(window.attachEvent) {
+//    window.attachEvent('onload', yourFunctionName);
+//} else {
+//    if(window.onload) {
+//        var curronload = window.onload;
+//        var newonload = function(evt) {
+//            curronload(evt);
+//            yourFunctionName(evt);
+//        };
+//        window.onload = newonload;
+//    } else {
+//        window.onload = yourFunctionName;
+//    }
+//}
+</script>
+<script type="text/javascript" src="js/polyline.js"></script>
+<script type="text/javascript" src="js/fileio.js"></script>
+<script type="text/javascript" src="js/curve.js"></script>
+<script type="text/javascript" src="js/transform.js"></script>
+<script type="text/javascript" src="js/selection.js"></script>
+<script type="text/javascript" src="js/undo.js"></script>
+
+</head>
+<style>
+.uicontainer {
+    position:absolute;
+}    
+.svgButton:hover {
+    cursor:crosshair; 
+    filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.4));
+}
+html,
+body {
+    background-color:darkgray;
+    height: 100%;
+}
+
+/* Scale canvas with resize attribute to full size */
+canvas[resize] {
+    width: 100%;
+    height: 100%;
+    border: 5px;
+    border-color: black;
+}
+.drawsurface {
+    position: absolute;
+    top:50px;
+    left:50px;
+}
+/*position relative as a base for non-static elements*/
+
+/*every direct child positioned absolute*/
+</style>
+<body>
+    <img src="artmachineIcons.svg" onload="SVGInject(this)"/>
+	<canvas class="drawsurface" id="myCanvas" resize></canvas>
+</body>
+</html>

@@ -1,0 +1,13 @@
+artmachine_entry.js
+
+test1
+    Don't use html elements just canvas that way the canvas can be full screen
+        Pro:
+            No crazy css to make the whole thing work
+        Con:
+            Have to provide more structure, and build UI elements like list view which could come 
+            automatically from html
+        Todo: how hard is it to create a list view in canvas, 
+        how hard is it to float a list view in a floating div?
+        
+    entry can provide organization 

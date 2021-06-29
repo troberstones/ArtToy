@@ -1,0 +1,136 @@
+key design goals:
+facilitate each interaction mode
+Activities:
+    drawing:
+        filled Shape
+        line
+        pressure weighted line
+        polyline
+        symetry drawing
+    Colors:
+        Pick Colors
+        manipulate current Colors
+        manipulate current slection Colors
+            Replace
+            nudge
+        Set stroke
+            weight
+            Colors
+            opacity
+            no stroke
+        Set fill:
+            color
+            opacity
+            no-fill
+            gradient
+            pattern
+    shape construction:
+        primitives
+            rect
+            circle
+            elipse
+            star
+            text
+        symetry mode
+    selection:
+        Group
+        layer
+        single selection
+        multi selection
+        remove from selection
+        box selection
+        lasso selection
+        Selection targets:
+            Shapes
+            Groups
+            points
+    Selection operations:
+        Alignments:
+            Center
+                to page
+            align
+                tops/left
+                bottoms/right
+                CenterV/CenterH
+            Distribute:
+                centers
+                distanecs between tops and bottoms/sides
+        Clip
+            set current selection as clip
+        Group
+        Booleans
+            union
+            difference
+            combine
+        Transform:
+                around pivot
+                around selection center
+
+            Scale selection
+            move selection
+            rotate selection
+            transform pivot
+            Mirror/flip
+        Duplicate:
+            Shapes
+                copy
+                array - copy number and xform
+                along path
+                blend 2 Shapes
+                duplicate and repeat steps untill repeat is pressed again like a macro
+    Outliner
+    Import
+    Save
+    quick Save
+    scrip process curves
+        houdini for curves
+    view transforms:
+        zoom
+        rotate
+        flip
+
+major classes:
+    Selection 
+        holds the selected data, there can be on or many
+        provides access to the current pivot
+        provides the active selection mode
+    transformer
+        works on selection
+        draws active manipulator widgit
+    Tool
+        handles creation and mouse event proessing for the creation of defined shape
+        When activated the tool takes over event handling
+    color manipulator
+        like a tool
+        works on selection
+    event processor:
+        provides information about the current event so that it can be uniformly consumed
+        either that or just use the native event data
+            still need to have something provide the click data transfomed by the view transform
+    Multi touch event processor:
+        provide support for zoom, and undo and gestures
+UI elements:
+    Color palette
+        gradient
+        image
+        swatches
+    Color adjustor:
+        HSV
+        RGB
+        HSL
+        Cyan->magenta adjust, yellow->? adjust 
+            Look at nuke grade node
+    Manipulator widget
+    Flyout support for tool settings
+        This could be alignment controls
+        Boolean controls
+        Shape settings
+        numerical transform controls
+        text controls
+        
+
+
+
+
+
+
