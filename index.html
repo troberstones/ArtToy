@@ -9,6 +9,8 @@
 <script type="text/javascript" src="js/paper.js"></script>
 <!-- <script type="text/javascript" src="js/init.js"></script> -->
 <script type="text/javascript">
+// Paramaterize the SVGInject script options so that the UI interface SVG file can be
+// loaded inline into the html file. 
  SVGInject.setOptions({
       useCache: false, // no caching
       copyAttributes: false, // do not copy attributes from `<img>` to `<svg>`
@@ -34,6 +36,7 @@
         img.style.background = 'red';
       }
     });
+
     var dispatch = {
         empty: () => { console.log("empty called"); },
         test: () => { console.log("test called"); },
@@ -44,11 +47,12 @@
 // added by the sub documents. -> add svg element and register its inlinig using the
 // handy library. Then let the registration code hook up the interaction
 
+// register a function call in the dispatch object to handle UI events
 function registerEventHandler(entryPoint, entryFun) {
     dispatch[entryPoint] = entryFun;
 }
-
-function initUI() {
+function initializeSVGCallbacks() {
+    // loop over the ids from the svg file and register callbacks for each one.
     var uicontainter = document.getElementsByClassName("uicontainer");
     console.log(uicontainter)
     console.log(uicontainter.item(0).children)
@@ -65,7 +69,14 @@ function initUI() {
         }
     });
 
-    //uicontainter.
+}
+var context = null;
+var canv = null;
+function initUI() {
+    initializeSVGCallbacks();
+    canv = document.getElementById("myCanvas");
+    ctx = canv.getContext("2d");
+    canvasInit();
 }
 //window.onload = initUI();
 //if(window.attachEvent) {
@@ -89,6 +100,8 @@ function initUI() {
 <script type="text/javascript" src="js/transform.js"></script>
 <script type="text/javascript" src="js/selection.js"></script>
 <script type="text/javascript" src="js/undo.js"></script>
+<script type="text/javascript" src="js/canvasposition.js"></script>
+<script type="text/javascript" src="js/init.js"></script>
 
 </head>
 <style>

@@ -1,12 +1,18 @@
-window.onload = function () {
-    //uiInit();
-    canvasInit();
-    //paletteInit();
-    //init_range_sliders();
-}
+//window.onload = function () {
+    ////uiInit();
+    //canvasInit();
+    ////paletteInit();
+    ////init_range_sliders();
+//}
+paper.install(window);
+// Keep global references to both tools, so the HTML
+// links below can access them.
+
 var canvas;
 
-
+//function drawBox() {
+//    paper.project.
+//}
 function canvasInit() {
     console.log("start canvas Init");
     console.log("onload called!");
@@ -16,7 +22,7 @@ function canvasInit() {
     // Create an empty project and a view for the canvas:
     paper.setup(canvas);
     paper.project.clear();
-    paper.project.importSVG("artmachineIcons.svg");
+    //paper.project.importSVG("artmachineIcons.svg");
     //let savedDrawing = localStorage.getItem("drawing");
     //if (savedDrawing) {
     //    paper.project.clear();
