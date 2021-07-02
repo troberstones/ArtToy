@@ -9,11 +9,6 @@ function notfilled() {
     console.log("notfilled called");
 }
 
-registerEventHandler("polyline",()=>{
-    console.log("Polyline handler");
-    polylineRegister();
-
-});
 var curveTool = null;
 function filledRegister() {
     console.log("registerCurvetool");
@@ -29,11 +24,12 @@ function filledRegister() {
 		}
 
 		curveTool = new Tool();
-		curveTool.minDistance = 20;
+		curveTool.minDistance = 30;
 		curveTool.onMouseDown = onMouseDown;
 
 		curveTool.onMouseDrag = function(event) {
 			// Use the arcTo command to draw cloudy lines
-			path.arcTo(event.point);
+			//path.arcTo(event.point);
+            path.add(event.point);
 		}
 }

@@ -1,0 +1,52 @@
+Pan:
+    implement pan
+    add zoom control UI
+    implementzoom
+implement Undo/redo stack
+    change color of buttons when there is nothign to do
+    push new undo command whenever something happens
+
+Polyline:
+    implment polyline
+    implement stroke width
+    implement stroke color
+    implement un-precise polyline
+    ui for inprecision
+    ? How to end a polyline 
+        when you tap on (end) ui element?
+        re-tap on polyline tool
+        some second hand tap
+        keyboard tap i.e. enter?
+curves
+    implement filled
+    implement resample behavior
+    add ui for precision of resample
+
+color picker:
+    design color picker
+    add UI picker
+    add ui color sliders
+
+Layers:
+    add UI for Layers
+    add switch layer behavior
+    add hide layer behavior
+    add reorder layer behavior
+    add layer opacity control
+
+select:
+    add rect select
+    add direct select
+    add lasso select
+    sub commands:
+        Group
+        ungroup
+        slect groups 
+        select points
+        select individual objects
+        select partial selections (overlapping selection method)
+
+transform:
+    add transform UI gnomon
+    move selection
+

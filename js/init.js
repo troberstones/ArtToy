@@ -23,11 +23,11 @@ function canvasInit() {
     paper.setup(canvas);
     paper.project.clear();
     //paper.project.importSVG("artmachineIcons.svg");
-    //let savedDrawing = localStorage.getItem("drawing");
-    //if (savedDrawing) {
-    //    paper.project.clear();
-    //    paper.project.importJSON(savedDrawing);
-    //}
+    let savedDrawing = localStorage.getItem("drawing");
+    if (savedDrawing) {
+        paper.project.clear();
+        paper.project.importJSON(savedDrawing);
+    }
     let canvasParent = canvas.parentElement;
     canvas.width = canvasParent.offsetWidth;
     canvas.height = canvasParent.offsetHeight;
@@ -36,12 +36,12 @@ function canvasInit() {
     //    canvas.width = canvasParent.offsetWidth;
     //    canvas.height = canvasParent.offsetHeight;
     //});
-    //window.addEventListener("beforeunload", (event) => {
-    //    localStorage.setItem("drawing", paper.project.exportJSON({ asString: true }));
-    //});
-    //window.addEventListener("visibilitychange", function (e) {
-    //    if (document.visibilityState == 'hidden') {
-    //        localStorage.setItem("drawing", paper.project.exportJSON({ asString: true }));
-    //    }
-    //});
+    window.addEventListener("beforeunload", (event) => {
+        localStorage.setItem("drawing", paper.project.exportJSON({ asString: true }));
+    });
+    window.addEventListener("visibilitychange", function (e) {
+        if (document.visibilityState == 'hidden') {
+            localStorage.setItem("drawing", paper.project.exportJSON({ asString: true }));
+        }
+    });
 }
