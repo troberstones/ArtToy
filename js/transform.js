@@ -2,6 +2,9 @@ registerEventHandler("move",()=>{translate();});
 registerEventHandler("rotate",()=>{rotate();});
 registerEventHandler("scale",()=>{scale();});
 
+
+
+
 function translate() {
     console.log("translate selection called");
 }

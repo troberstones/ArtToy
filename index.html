@@ -62,7 +62,7 @@ function initializeSVGCallbacks() {
         if(idName) {
             console.log(idName);
             element.classList.add("svgButton");
-            element.addEventListener("click", (evt)=> {
+            element.addEventListener("pointerdown", (evt)=> {
                 console.log("pressed:"+evt.currentTarget.id)
                 dispatch[evt.currentTarget.id]();
             });
@@ -94,6 +94,7 @@ function initUI() {
 //    }
 //}
 </script>
+<script type="text/javascript" src="js/init.js"></script>
 <script type="text/javascript" src="js/polyline.js"></script>
 <script type="text/javascript" src="js/fileio.js"></script>
 <script type="text/javascript" src="js/curve.js"></script>
@@ -101,7 +102,7 @@ function initUI() {
 <script type="text/javascript" src="js/selection.js"></script>
 <script type="text/javascript" src="js/undo.js"></script>
 <script type="text/javascript" src="js/canvasposition.js"></script>
-<script type="text/javascript" src="js/init.js"></script>
+<script type="text/javascript" src="js/layers.js"></script>
 
 </head>
 <style>
