@@ -70,10 +70,27 @@ function initializeSVGCallbacks() {
     });
 
 }
+function initColorSlider() {
+    var uicontainter = document.getElementsByClassName("uicontainer");
+    console.log(uicontainter.item(1).children)
+    var svgElms = uicontainter.item(1).children[0].childNodes;
+    svgElms.forEach((element, index, array) => { 
+        idName = element.id;
+        if(idName) {
+            console.log(idName);
+            //element.classList.add("svgButton");
+            element.addEventListener("pointerdown", (evt)=> {
+                console.log("pressed:"+evt.currentTarget.id)
+                dispatch[evt.currentTarget.id]();
+            });
+        }
+    });
+}
 var context = null;
 var canv = null;
 function initUI() {
     initializeSVGCallbacks();
+    initColorSlider();
     canv = document.getElementById("myCanvas");
     ctx = canv.getContext("2d");
     canvasInit();
@@ -138,6 +155,13 @@ canvas[resize] {
     width:150;
     height:150;
 }
+.colorPicker{
+    position: absolute;
+    right:1%;
+    top:10%;
+    width:150px;
+    height:150px;
+}
 /*position relative as a base for non-static elements*/
 
 /*every direct child positioned absolute*/
@@ -146,5 +170,6 @@ canvas[resize] {
     <img src="artmachineIcons.svg" onload="SVGInject(this)"/>
 	<canvas class="drawsurface" id="myCanvas" resize></canvas>
 	<canvas class="uisurface" id="uiCanvas" ></canvas>
+    <div class="colorPicker" width="600" height="600"><img src="picker.svg" onload="SVGInject(this)"/></div>
 </body>
 </html>
