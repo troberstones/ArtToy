@@ -9,6 +9,7 @@ paper.install(window);
 // links below can access them.
 
 var canvas;
+var canvasCP;
 
 //function drawBox() {
 //    paper.project.
@@ -20,17 +21,28 @@ function canvasInit() {
     // Get a reference to the canvas object
     canvas = document.getElementById('myCanvas');
     // Create an empty project and a view for the canvas:
-    paper.setup(canvas);
+    var drawingProj = paper.setup(canvas);
     paper.project.clear();
+
+    canvasCP = document.getElementById('uiCanvas');
+    var uiproject = paper.setup(canvasCP)
+
+    uiproject.activate();
+    setupColorPicker();
+    //var testPath = new Path.Circle({center:[10,10],radius:500});
+    //testPath.fillColor = "blue";
+    //console.log(paper);
+    drawingProj.activate();
+
     //paper.project.importSVG("artmachineIcons.svg");
     let savedDrawing = localStorage.getItem("drawing");
     if (savedDrawing) {
         paper.project.clear();
         paper.project.importJSON(savedDrawing);
     }
-    let canvasParent = canvas.parentElement;
-    canvas.width = canvasParent.offsetWidth;
-    canvas.height = canvasParent.offsetHeight;
+    //let canvasParent = canvas.parentElement;
+    //canvas.width = canvasParent.offsetWidth;
+    //canvas.height = canvasParent.offsetHeight;
 
     //window.addEventListener("resize", (event) => {
     //    canvas.width = canvasParent.offsetWidth;
@@ -44,4 +56,11 @@ function canvasInit() {
             localStorage.setItem("drawing", paper.project.exportJSON({ asString: true }));
         }
     });
+}
+
+function setupColorPicker() {
+    for(let i = 0; i < 10; i++) {
+        var colorCircle = new Path.Circle({center:[i*10,30],radius:10});
+        colorCircle.fillColor = "red";
+    }
 }

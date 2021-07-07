@@ -131,6 +131,13 @@ canvas[resize] {
     top:50px;
     left:50px;
 }
+.uisurface{
+    position: absolute;
+    top:50px;
+    left:50px;
+    width:150;
+    height:150;
+}
 /*position relative as a base for non-static elements*/
 
 /*every direct child positioned absolute*/
@@ -138,5 +145,6 @@ canvas[resize] {
 <body>
     <img src="artmachineIcons.svg" onload="SVGInject(this)"/>
 	<canvas class="drawsurface" id="myCanvas" resize></canvas>
+	<canvas class="uisurface" id="uiCanvas" ></canvas>
 </body>
 </html>
