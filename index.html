@@ -78,17 +78,31 @@ function initColorSlider() {
         idName = element.id;
         if(idName) {
             console.log(idName);
+            const SliderKnob = element.style.draggable = true;
+           // ({
+           //     draggable: true,
+           //     dragBounds: {
+           //         left: MIN_X,
+           //         top: -CENTER_Y + MARGIN * 2,
+           //         bottom: CENTER_Y - MARGIN * 2,
+           //         right: MAX_X,
+           //     },
+           //     dragEnd: {
+           //         y: 0,
+           //         transition: { type: "spring", damping: 80, stiffness: 300 },
+           //     },
+           // })
             //element.classList.add("svgButton");
-            element.addEventListener("mousedown", (evt)=> {
-                console.log("pressed:"+evt.currentTarget.id);
-                colorSliderClick(evt);
-                //children[5].setAttribute("transform","matrix(1,0,0,1,"+evt.layerX+",-1.295)")
-            });
-            element.addEventListener("mousemove", (evt)=> {
-                console.log("pressed:"+evt.currentTarget.id);
-                colorSliderClick(evt);
-                //children[5].setAttribute("transform","matrix(1,0,0,1,"+evt.layerX+",-1.295)")
-            });
+            //element.addEventListener("mousedown", (evt)=> {
+            //    console.log("pressed:"+evt.currentTarget.id);
+            //    //colorSliderClick(evt);
+            //    //children[5].setAttribute("transform","matrix(1,0,0,1,"+evt.layerX+",-1.295)")
+            //});
+            //element.addEventListener("mousemove", (evt)=> {
+            //    console.log("pressed:"+evt.currentTarget.id);
+            //    //colorSliderClick(evt);
+            //    //children[5].setAttribute("transform","matrix(1,0,0,1,"+evt.layerX+",-1.295)")
+            //});
         }
     });
 }
@@ -115,7 +129,11 @@ var context = null;
 var canv = null;
 function initUI() {
     initializeSVGCallbacks();
-    initColorSlider();
+    //initColorSlider();
+
+    paletteInit();
+    init_range_sliders();
+
     canv = document.getElementById("myCanvas");
     ctx = canv.getContext("2d");
     canvasInit();
@@ -145,11 +163,14 @@ function initUI() {
 <script type="text/javascript" src="js/undo.js"></script>
 <script type="text/javascript" src="js/canvasposition.js"></script>
 <script type="text/javascript" src="js/layers.js"></script>
+<script type="text/javascript" src="js/palette.js"></script>
+<script type="text/javascript" src="js/rangeslider.js"></script
 
 </head>
 <style>
 .uicontainer {
     position:absolute;
+    user-select:none;
 }    
 .svgButton:hover {
     cursor:crosshair; 
@@ -187,6 +208,76 @@ canvas[resize] {
     width:150px;
     height:150px;
 }
+.sliderGroup {
+        height: 30%;
+        width: 100%;
+    }
+
+    .rangeslider {
+        border-top: 10px;
+        background-color: rgb(65, 65, 65);
+        width: 100%;
+        height: 25%;
+    }
+    .rangeslider > canvas {
+        height: 2rem;
+        width: 100%;
+        border-radius: 12px;
+        margin-top: 15px;
+    }
+    .palette {
+        position: absolute;
+        z-index: 0;
+        /*border: 1px solid black;*/
+    }
+    .paletteOverlay {
+        position: absolute;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    #paletteWrapper {
+        position: relative;
+        width: 200px;
+        height: 300px;
+        display: block;
+        /*background-color: azure;*/
+        min-height: 200px
+    }
+
+    .colorManip {
+        display: block;
+    }
+
+    .round-corner {
+        border-radius: 12px;
+    }
+
+    .one-edge-shadow {
+        box-shadow: 0 8px 6px -6px black;
+    }
+    .datareadout {
+        background-color: rgb(174, 174, 211);
+        font-size: 8pt;
+        display: inline;
+        user-select: none;
+        
+    }
+
+    .colorslider {
+        display: block;
+    }
+
+    .selectedColor {
+        outline-width: 2px;
+        outline-color: black;
+        ;
+    }
+    .textlabel {
+        user-select: none;
+        color: white;
+        justify-content: center;
+    }
 /*position relative as a base for non-static elements*/
 
 /*every direct child positioned absolute*/
@@ -194,7 +285,38 @@ canvas[resize] {
 <body>
     <img src="artmachineIcons.svg" onload="SVGInject(this)"/>
 	<canvas class="drawsurface" id="myCanvas" resize></canvas>
-	<canvas class="uisurface" id="uiCanvas" ></canvas>
-    <div class="colorPicker" width="600" height="600"><img src="picker.svg" onload="SVGInject(this)"/></div>
+	<!--<canvas class="uisurface" id="uiCanvas" ></canvas>-->
+    <!--<div class="colorPicker" width="600" height="600"><img src="picker.svg" onload="SVGInject(this)"/></div>-->
+    <div class="colorPicker">
+        <div class="datareadout" id="datareadout">data</div>
+        <div class="datareadout" id="datareadoutcolor">data</div>
+        <div class="datareadout" id="pickedColor">data</div>
+        <canvas id="displayColors" class="selectedColor" width="100%" height="50px"></canvas>
+        <div id="paletteWrapper" class="one-edge-shadow round-corner">
+            <canvas id="palette" class="palette round-corner" width="200" height="300"></canvas>
+            <canvas id="paletteOverlay" class="paletteOverlay" width="200" height=300></canvas>
+        </div>
+        <div class="colorManip">
+            <div>
+                <div class="divider"></div>
+                <div class="sliderGroup">
+                    <span>
+                        <h6 class="textlabel">RGB</h6>
+                    </span>
+                    <div class="rangeslider" data-slidervalue=".75" data-mode="Rgb"></div>
+                    <div class="rangeslider" data-slidervalue=".5" data-mode="rGb"></div>
+                    <div class="rangeslider" data-slidervalue=".5" data-mode="rgB"></div>
+                </div>
+                <div class="sliderGroup">
+                    <span>
+                        <h6 class="textlabel">HSV</h6>
+                    </span>
+                    <div class="rangeslider" data-slidervalue=".75" data-mode="Hsv"></div>
+                    <div class="rangeslider" data-slidervalue=".5" data-mode="hSv"></div>
+                    <div class="rangeslider" data-slidervalue=".5" data-mode="hsV"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

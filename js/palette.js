@@ -127,14 +127,14 @@ function getColorComponents(colorString) {
 }
 function updateColorSliders() {
     updateRangeColorSliders();
-    colors = getColorComponents(fillColor)
-    ColorSliders.r.value = colors[0];
-    ColorSliders.g.value = colors[1];
-    ColorSliders.b.value = colors[2];
-    let results = rgb2hsv(colors[0]/255,colors[1]/255,colors[2]/255);
-    ColorSliders.h.value = results[0];
-    ColorSliders.s.value = results[1]*255;
-    ColorSliders.v.value = results[2]*255;
+    //colors = getColorComponents(fillColor)
+    //ColorSliders.r.value = colors[0];
+    //ColorSliders.g.value = colors[1];
+    //ColorSliders.b.value = colors[2];
+    //let results = rgb2hsv(colors[0]/255,colors[1]/255,colors[2]/255);
+    //ColorSliders.h.value = results[0];
+    //ColorSliders.s.value = results[1]*255;
+    //ColorSliders.v.value = results[2]*255;
 
 }
 function drawPalette() {
@@ -153,6 +153,7 @@ function drawPalette() {
         }
     }
 }
+
 /**
  * Converts an HSL color value to RGB. Conversion formula
  * adapted from http://en.wikipedia.org/wiki/HSL_color_space.

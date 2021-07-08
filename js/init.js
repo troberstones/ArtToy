@@ -24,11 +24,11 @@ function canvasInit() {
     var drawingProj = paper.setup(canvas);
     paper.project.clear();
 
-    canvasCP = document.getElementById('uiCanvas');
-    var uiproject = paper.setup(canvasCP)
+    //canvasCP = document.getElementById('uiCanvas');
+    //var uiproject = paper.setup(canvasCP)
 
-    uiproject.activate();
-    setupColorPicker();
+    //uiproject.activate();
+    //setupColorPicker();
     //var testPath = new Path.Circle({center:[10,10],radius:500});
     //testPath.fillColor = "blue";
     //console.log(paper);
@@ -63,4 +63,57 @@ function setupColorPicker() {
         var colorCircle = new Path.Circle({center:[i*10,30],radius:10});
         colorCircle.fillColor = "red";
     }
+}
+
+function colorSlider(mode, value) {
+    //console.log("ColorSlider:" + mode + " " + value);
+    color = getColorComponents(fillColor);
+
+    switch (mode) {
+        case "r":
+            color[0] = value;
+            fillColor = "rgb(" + color[0] + "," + color[1] + "," + color[2] + ")";
+            break;
+        case "g":
+            color[1] = value;
+            fillColor = "rgb(" + color[0] + "," + color[1] + "," + color[2] + ")";
+            break;
+        case "b":
+            color[2] = value;
+            fillColor = "rgb(" + color[0] + "," + color[1] + "," + color[2] + ")";
+            break;
+        case "h":
+            hsvColor = rgb2hsv(color[0] / 255, color[1] / 255, color[2] / 255);
+            hsvColor[0] = value;
+            color = hsv2rgb(...hsvColor)
+            fillColor = "rgb(" + color[0] * 255 + "," + color[1] * 255 + "," + color[2] * 255 + ")";
+            break;
+        case "s":
+            hsvColor = rgb2hsv(color[0] / 255, color[1] / 255, color[2] / 255);
+            hsvColor[1] = value / 255;
+            color = hsv2rgb(...hsvColor)
+            fillColor = "rgb(" + color[0] * 255 + "," + color[1] * 255 + "," + color[2] * 255 + ")";
+            break;
+        case "v":
+            hsvColor = rgb2hsv(color[0] / 255, color[1] / 255, color[2] / 255);
+            hsvColor[2] = value / 255;
+            color = hsv2rgb(...hsvColor)
+            fillColor = "rgb(" + color[0] * 255 + "," + color[1] * 255 + "," + color[2] * 255 + ")";
+            break;
+        default:
+            break;
+    }
+    colorChanged();
+    drawSwatch(null);
+}
+function colorChanged() {
+    updateColorSliders();
+   // if (activeItem) {
+   //     activeItem.fillColor = fillColor;
+   // } else {
+   //     if (adjustLastColor == true) {
+   //         paper.project.activeLayer.lastChild.fillColor = fillColor;
+   //         //paper.view.draw();
+   //     }
+   // }
 }

@@ -37,7 +37,8 @@ function filledRegister() {
 
 		path.strokeColor = 'black';
 		if(filledCurveTool) {
-			path.fillColor = "red";
+			//path.fillColor = "red";
+			path.fillColor = fillColor;
 		}
 		path.add(event.point);
 	}
