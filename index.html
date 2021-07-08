@@ -73,18 +73,43 @@ function initializeSVGCallbacks() {
 function initColorSlider() {
     var uicontainter = document.getElementsByClassName("uicontainer");
     console.log(uicontainter.item(1).children)
-    var svgElms = uicontainter.item(1).children[0].childNodes;
+    var svgElms = uicontainter.item(1).childNodes;
     svgElms.forEach((element, index, array) => { 
         idName = element.id;
         if(idName) {
             console.log(idName);
             //element.classList.add("svgButton");
-            element.addEventListener("pointerdown", (evt)=> {
-                console.log("pressed:"+evt.currentTarget.id)
-                dispatch[evt.currentTarget.id]();
+            element.addEventListener("mousedown", (evt)=> {
+                console.log("pressed:"+evt.currentTarget.id);
+                colorSliderClick(evt);
+                //children[5].setAttribute("transform","matrix(1,0,0,1,"+evt.layerX+",-1.295)")
+            });
+            element.addEventListener("mousemove", (evt)=> {
+                console.log("pressed:"+evt.currentTarget.id);
+                colorSliderClick(evt);
+                //children[5].setAttribute("transform","matrix(1,0,0,1,"+evt.layerX+",-1.295)")
             });
         }
     });
+}
+function colorSliderClick(evt) {
+    let target = evt.currentTarget;
+    let children = target.childNodes;
+    console.log(children);
+    let bboxwidth = target.getBBox()
+    let mat = target.getScreenCTM().inverse();
+    //console.log(evt.)
+    let svg = target.ownerSVGElement;
+    var pt = svg.createSVGPoint();
+    pt.x = evt.pageX;
+    pt.y = evt.pageY;
+    //pt = pt.matrixTransform(svg.getScreenCTM().inverse());
+    pt = pt.matrixTransform(mat);
+    let xoff = bboxwidth.x;
+    //pt.x -= xoff;
+    children[5].setAttribute("transform", "translate(" + pt.x + ")");
+    console.log(pt.x/bboxwidth.width);
+
 }
 var context = null;
 var canv = null;
