@@ -7,19 +7,19 @@ function init_range_sliders() {
         RangeColorSliders.push(canv);
         canv.width = 200;
         canv.height = 30;
-        //canv.addEventListener("click", rangeSliderEvent);
+        canv.addEventListener("click", rangeSliderEvent);
         canv.addEventListener("pointermove", rangeSliderEvent);
         canv.addEventListener("pointerup", rangeSliderEvent);
         canv.addEventListener("pointerdown", rangeSliderEvent);
         canv.addEventListener("touchstart", rangeSliderEvent);
-        //canv.addEventListener("mousedown", rangeSliderEvent);
+        canv.addEventListener("mousedown", rangeSliderEvent);
         element.appendChild(canv);
 
         canv.SliderValue = element.dataset.slidervalue;
         canv.ColorMode = element.dataset.mode;
 
         canv.changedFunction = () => {
-            console.log("changeFunctionCalled");
+            //console.log("changeFunctionCalled");
             let mode = null;
             let value = null;
             switch (canv.ColorMode) {
