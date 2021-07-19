@@ -56,9 +56,12 @@ function initializeSVGCallbacks() {
     var uicontainter = document.getElementsByClassName("uicontainer");
     console.log(uicontainter)
     console.log(uicontainter.item(0).children)
-    var svgElms = uicontainter.item(0).children[0].childNodes;
+    //var svgElms = uicontainter.item(0).children[0].childNodes;
+    var svgElms = uicontainter.item(0).children[0].children[2].childNodes
+
     svgElms.forEach((element, index, array) => { 
         idName = element.id;
+        console.log("setup for "+idName);
         if(idName) {
             console.log(idName);
             element.classList.add("svgButton");

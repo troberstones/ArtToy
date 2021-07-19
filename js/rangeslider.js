@@ -12,6 +12,7 @@ function init_range_sliders() {
         canv.addEventListener("pointerup", rangeSliderEvent);
         canv.addEventListener("pointerdown", rangeSliderEvent);
         canv.addEventListener("touchstart", rangeSliderEvent);
+        canv.addEventListener("touchmove",rangeSliderEvent);
         canv.addEventListener("mousedown", rangeSliderEvent);
         element.appendChild(canv);
 
