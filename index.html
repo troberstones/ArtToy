@@ -57,7 +57,8 @@ function initializeSVGCallbacks() {
     console.log(uicontainter)
     console.log(uicontainter.item(0).children)
     //var svgElms = uicontainter.item(0).children[0].childNodes;
-    var svgElms = uicontainter.item(0).children[0].children[2].childNodes
+    //var svgElms = uicontainter.item(0).children[0].children[2].childNodes
+    var svgElms = uicontainter.item(0).childNodes;
 
     svgElms.forEach((element, index, array) => { 
         idName = element.id;
@@ -172,12 +173,13 @@ function initUI() {
 </head>
 <style>
 .uicontainer {
-    position:absolute;
+    
     user-select:none;
+    
 }    
 .svgButton:hover {
     cursor:crosshair; 
-    filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.4));
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.4));
 }
 html,
 body {
@@ -282,13 +284,16 @@ canvas[resize] {
         color: white;
         justify-content: center;
     }
+    #Artboard1 {
+        viewport-fit: true;
+    }
     
 /*position relative as a base for non-static elements*/
 
 /*every direct child positioned absolute*/
 </style>
 <body>
-    <img src="artmachineIcons.svg" onload="SVGInject(this)"/>
+    <img src="artmachineIcons.svg" onload="SVGInject(this)" resize/>
 	<canvas class="drawsurface" id="myCanvas" resize></canvas>
 	<!--<canvas class="uisurface" id="uiCanvas" ></canvas>-->
     <!--<div class="colorPicker" width="600" height="600"><img src="picker.svg" onload="SVGInject(this)"/></div>-->

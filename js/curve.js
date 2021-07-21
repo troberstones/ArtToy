@@ -1,5 +1,6 @@
 registerEventHandler("filled",()=>{filled();});
 registerEventHandler("notfilled",()=>{notfilled();});
+registerEventHandler("notstroked",()=>{notstroked();});
 
 function filled() {
 	console.log("filled called");
@@ -7,6 +8,7 @@ function filled() {
 		filledRegister();
 	}
 	filledCurveTool = true;
+	strokedCurveTool = true;
 	activateCurveTool();
 }
 function notfilled() {
@@ -15,6 +17,16 @@ function notfilled() {
 		filledRegister();
 	}
 	filledCurveTool = false;
+	strokedCurveTool = true;
+	activateCurveTool();
+}
+function notstroked() {
+    console.log("not stroked called");
+	if (!curveTool) {
+		filledRegister();
+	}
+	filledCurveTool = true;
+	strokedCurveTool = false;
 	activateCurveTool();
 }
 var curveTool = null;
@@ -23,6 +35,8 @@ function activateCurveTool() {
 }
 
 var filledCurveTool = false;
+var strokedCurveTool= false;
+
 function filledRegister() {
 	var path;
 
@@ -35,7 +49,9 @@ function filledRegister() {
 		//	strokeWidth: 5
 		//};
 
-		path.strokeColor = 'black';
+		if(strokedCurveTool) {
+			path.strokeColor = 'black';
+		}
 		if(filledCurveTool) {
 			//path.fillColor = "red";
 			path.fillColor = fillColor;
