@@ -92,6 +92,7 @@ function pickColor(event) {
             console.log("circle called for " + event.type);
             break;
     }
+    return false;
 }
 
 function drawSwatch(event) {

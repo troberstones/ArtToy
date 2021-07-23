@@ -18,11 +18,12 @@ Polyline:
         some second hand tap
         keyboard tap i.e. enter?
 curves
-    implement filled
-    implement resample behavior
+    //implement filled
+    //implement resample behavior
     add ui for precision of resample
 
 color picker:
+    // Port over old color picker
     design color picker
     add UI picker
     add ui color sliders

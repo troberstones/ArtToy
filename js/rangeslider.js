@@ -5,8 +5,8 @@ function init_range_sliders() {
     Array.prototype.forEach.call(rsliders, (element) => {
         let canv = document.createElement("canvas");
         RangeColorSliders.push(canv);
-        canv.width = 200;
-        canv.height = 30;
+        //canv.width = 200;
+        //canv.height = 30;
         canv.addEventListener("click", rangeSliderEvent);
         canv.addEventListener("pointermove", rangeSliderEvent);
         canv.addEventListener("pointerup", rangeSliderEvent);
@@ -167,7 +167,7 @@ function updateRangeSlider(event) {
     console.log("reange slide eventI was clicked!");
     let ctx2d = target.getContext("2d");
     let pos = getCursorPosition(event);
-    event.target.SliderValue = pos.x / target.width;
+    event.target.SliderValue = pos.x / target.clientWidth;
 
     if (event.target.changedFunction) {
         event.target.changedFunction()
