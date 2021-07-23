@@ -108,6 +108,7 @@ function colorSlider(mode, value) {
 }
 function colorChanged() {
     updateColorSliders();
+    applyCurrentColorToSelection();
    // if (activeItem) {
    //     activeItem.fillColor = fillColor;
    // } else {
@@ -116,4 +117,14 @@ function colorChanged() {
    //         //paper.view.draw();
    //     }
    // }
+}
+function applyCurrentColorToSelection() {
+    for(i = 0; i < paper.project.selectedItems.length; i++) {
+        if (paper.project.selectedItems[i].className != "Layer") {
+            paper.project.selectedItems[i].fillColor = fillColor;
+        }
+    }
+}
+function clearSelection() {
+    paper.project.deselectAll();
 }

@@ -15,10 +15,20 @@ registerEventHandler("selectpoints",()=>{
 	selectToolActivate();
 });
 
-
+registerEventHandler("eyedropper",()=>{
+    console.log("selct points handler");
+	if(!selectTool) {
+    	selectToolRegister();
+	} 
+    selectToolPointsMode = false;
+    selectToolEyedropperMode = true;
+    lastTool = tool;
+	selectToolActivate();
+});
 
 var selectTool = null;
 var selectToolPointsMode = false;
+var lastTool = null;
 function selectToolActivate() {
 	selectTool.activate();
 }
@@ -35,11 +45,18 @@ function selectToolRegister() {
         }
         sel = null;
         sel = paper.project.hitTest(event.point,options);
-        if(sel) {
-            sel.item.selected = true;
+        if(selectToolEyedropperMode) {
+            if(sel) {
+                fillColor = sel.item.fillColor;
+            }
+            lastTool.activate();
         } else {
-            paper.project.deselectAll();
-            //paper.project.selectedItems.foreach((itm)=>{itm.selected = false;});
+            if (sel) {
+                sel.item.selected = true;
+            } else {
+                paper.project.deselectAll();
+                //paper.project.selectedItems.foreach((itm)=>{itm.selected = false;});
+            }
         }
 	}
 

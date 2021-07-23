@@ -31,6 +31,7 @@ function notstroked() {
 }
 var curveTool = null;
 function activateCurveTool() {
+	clearSelection();
 	curveTool.activate();
 }
 

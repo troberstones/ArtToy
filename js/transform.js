@@ -31,23 +31,22 @@ function moveToolActivate() {
 }
 function moveToolRegister() {
 	var path;
+	moveTool = new Tool();
+    moveTool.offsets = [];
 	function onMouseDown(event) {
-        //(paper.project.selectedItems).foreach((itm) => { itm.position= event.pos; });
-        //for(i = 0; i < paper.project.selectedItems.length; i++) {
-        //    if(paper.project.selectedItems[i].className != "Layer") {
-        //    paper.project.selectedItems[i].position = event.point;
-        //    }
-        //}
+        this.offsets = [];
+        for(i = 0; i < paper.project.selectedItems.length; i++) {
+            this.offsets[i] = paper.project.selectedItems[i].position.subtract(event.point);
+        }
         
 	}
 
-	moveTool = new Tool();
 	moveTool.onMouseDown = onMouseDown;
     moveTool.onMouseDrag = onMouseDown;
     moveTool.onMouseDrag = function (event) {
         for (i = 0; i < paper.project.selectedItems.length; i++) {
             if (paper.project.selectedItems[i].className != "Layer") {
-                paper.project.selectedItems[i].position += event.delta;
+                paper.project.selectedItems[i].position = this.offsets[i].add( event.point);
             }
         }
 	}

@@ -8,6 +8,7 @@ registerEventHandler("polyline",()=>{
 var polylineTool = null;
 
 function polylineActivate() {
+	clearSelection();
 	polylineTool.activate();
 }
 function polylineRegister() {
