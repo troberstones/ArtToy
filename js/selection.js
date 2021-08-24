@@ -3,6 +3,7 @@ registerEventHandler("select",()=>{
 	if(!selectTool) {
     	selectToolRegister();
 	} 
+    selectToolEyedropperMode = false;
     selectToolPointsMode = false;
 	selectToolActivate();
 });
@@ -11,6 +12,7 @@ registerEventHandler("selectpoints",()=>{
 	if(!selectTool) {
     	selectToolRegister();
 	} 
+    selectToolEyedropperMode = false;
     selectToolPointsMode = true;
 	selectToolActivate();
 });
@@ -28,6 +30,7 @@ registerEventHandler("eyedropper",()=>{
 
 var selectTool = null;
 var selectToolPointsMode = false;
+var selectToolEyedropperMode = false;
 var lastTool = null;
 function selectToolActivate() {
 	selectTool.activate();
