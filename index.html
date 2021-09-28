@@ -54,20 +54,20 @@ function registerEventHandler(entryPoint, entryFun) {
 function initializeSVGCallbacks() {
     // loop over the ids from the svg file and register callbacks for each one.
     var uicontainter = document.getElementsByClassName("uicontainer");
-    console.log(uicontainter)
-    console.log(uicontainter.item(0).children)
+    //console.log(uicontainter)
+    //console.log(uicontainter.item(0).children)
     //var svgElms = uicontainter.item(0).children[0].childNodes;
     //var svgElms = uicontainter.item(0).children[0].children[2].childNodes
     var svgElms = uicontainter.item(0).childNodes;
 
     svgElms.forEach((element, index, array) => { 
         idName = element.id;
-        console.log("setup for "+idName);
+        //console.log("setup for "+idName);
         if(idName) {
-            console.log(idName);
+            //console.log(idName);
             element.classList.add("svgButton");
             element.addEventListener("pointerdown", (evt)=> {
-                console.log("pressed:"+evt.currentTarget.id)
+                //console.log("pressed:"+evt.currentTarget.id)
                 dispatch[evt.currentTarget.id]();
             });
         }
@@ -141,6 +141,7 @@ function initUI() {
     canv = document.getElementById("myCanvas");
     ctx = canv.getContext("2d");
     canvasInit();
+    initLayerUI();
 }
 //window.onload = initUI();
 //if(window.attachEvent) {
@@ -175,10 +176,7 @@ function initUI() {
 .uicontainer {
     user-select:none;
     pointer-events: fill;
-    position:absolute;
-    top:100px;
     left:0px;
-    z-index:1;
 }    
 .svgButton:hover {
     cursor:crosshair; 
@@ -211,7 +209,13 @@ canvas[resize] {
     left:50px;
     width:150;
     height:150;
-    z-index: -100;
+    z-index: 100;
+}
+.layerui {
+    position: absolute;
+    bottom:10px;
+    left:5px;
+    z-index: 90;
 }
 .colorPicker{
     position: absolute;
@@ -220,6 +224,7 @@ canvas[resize] {
     width:150px;
     height:150px;
     user-select: none;
+    z-index: 100;
 }
 .sliderGroup {
         height: 30%;
@@ -337,6 +342,9 @@ canvas[resize] {
                 </div>
             </div>
         </div>
+    </div>
+    <div class="layerui">
+        <canvas class="layeruicanvas" width="100" height="400"></canvas>
     </div>
 </body>
 </html>
