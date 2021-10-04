@@ -168,7 +168,7 @@ function makeLayerIcon(layerItem) {
     var text = new PointText(new Point(30, yval));
 
 
-    text.fillColor = 'black';
+    text.fillColor = 'red';
     // Set the content of the text item:
     text.content = layerObject.activePaperProject.layers[i].name;
     //if(i == layerObject.activePaperProject.activeLayer.index) {
