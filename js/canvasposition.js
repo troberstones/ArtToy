@@ -1,6 +1,7 @@
 registerEventHandler("pan",()=>{pan();});
 registerEventHandler("zoom",()=>{zoom();});
 
+
 function pan() {
     console.log("pan doc called");
     pantoolregister()

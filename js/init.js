@@ -14,12 +14,51 @@ var canvasCP;
 //function drawBox() {
 //    paper.project.
 //}
+function initCanvasTouchEvent(someElement) {
+    // Register touch event handlers
+    someElement.addEventListener('touchstart', process_touchstart, false);
+    someElement.addEventListener('touchmove', processs_touchmove, false);
+    someElement.addEventListener('touchcancel', processs_touchcanel, false);
+    someElement.addEventListener('touchend', processs_touchend, false);
+}
+function processs_touchmove(ev) {
+    console.log("touchmove");
+
+}
+function processs_touchcanel(ev) {
+    console.log("touchcancel");
+
+}
+function processs_touchend(ev) {
+    console.log("touchend");
+
+}
+// touchstart handler
+function process_touchstart(ev) {
+    // Use the event's data to call out to the appropriate gesture handlers
+    switch (ev.touches.length) {
+        case 1: handle_one_touch(ev); break;
+        case 2: handle_two_touches(ev); break;
+       // case 3: handle_three_touches(ev); break;
+        default: gesture_not_supported(ev); break;
+    }
+}
+function handle_one_touch(ev) {
+    console.log("one touch");
+    return false;
+}
+function handle_two_touches(ev) {
+    console.log("one two touches");
+    return false;
+}
 function canvasInit() {
     console.log("start canvas Init");
     console.log("onload called!");
 
     // Get a reference to the canvas object
     canvas = document.getElementById('myCanvas');
+    // TODO: move this to the better place
+    initCanvasTouchEvent(canvas); 
     // Create an empty project and a view for the canvas:
     var drawingProj = paper.setup(canvas);
     paper.project.clear();

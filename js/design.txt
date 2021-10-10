@@ -79,6 +79,10 @@ Activities:
                 blend 2 Shapes
                 duplicate and repeat steps untill repeat is pressed again like a macro
     Outliner
+        - I now have a primitive layer interface
+            it allows active layer
+            layer visibility
+            draft view
     Import
     Save
     quick Save
