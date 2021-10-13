@@ -6,11 +6,11 @@ function paletteInit() {
     console.log("this is a test!");
     setupPalette();
 }
-function Point(xval,yval) {
+function pltPoint(xval,yval) {
     this.x = xval;
     this.y = yval;
 }
-var point = new Point(0,0);
+var point = new pltPoint(0,0);
 var touchDownPoint = point;
 var touchUpPoint = point;
 var palCanvas;
@@ -27,7 +27,7 @@ function getCursorPosition(event) {
     const y = event.clientY - rect.top;
     //console.log("x: " + x + " y: " + y)
     //ctx.fillStyle = boxColor
-    var pt = new Point(x,y)
+    var pt = new pltPoint(x,y)
     return pt
     //ctx.fillRect(x, y, 5, 5);
 }

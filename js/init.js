@@ -23,18 +23,25 @@ function initCanvasTouchEvent(someElement) {
 }
 function processs_touchmove(ev) {
     console.log("touchmove");
-
+    handle_pinch_zoom(ev);
 }
+
 function processs_touchcanel(ev) {
     console.log("touchcancel");
-
+    touchCount = ev.touches.length;
+    pinching = false;
+    panning = false;
 }
+
 function processs_touchend(ev) {
     console.log("touchend");
-
+    touchCount = ev.touches.length;
+    pinching = false;
+    panning = false;
 }
 // touchstart handler
 function process_touchstart(ev) {
+    touchCount = ev.targetTouches.length;
     // Use the event's data to call out to the appropriate gesture handlers
     switch (ev.touches.length) {
         case 1: handle_one_touch(ev); break;
@@ -47,9 +54,61 @@ function handle_one_touch(ev) {
     console.log("one touch");
     return false;
 }
+var tpCache = new Array();
+var touchCount = 0;
+var distanceBetweenTouches = null;
+var pinching = false;
+var panning = false;
+var pzstartPoint = null;
+var pzstartMatrixPt = null
 function handle_two_touches(ev) {
-    console.log("one two touches");
+    console.log("two touches");
+    //for (var i = 0; i < ev.targetTouches.length; i++) {
+    // tpCache.push(ev.targetTouches[0]);
+    // tpCache.push(ev.targetTouches[1]);
+    //}
+    let pt0 = new Point(ev.targetTouches[0].clientX,ev.targetTouches[0].clientY);
+    let pt1 = new Point(ev.targetTouches[1].clientX,ev.targetTouches[1].clientY);
+    pzstartPoint = pt0;
+    pzstartMatrixPt = new Point(view.matrix.tx, view.matrix.ty);
+
+    distanceBetweenTouches = pt0.getDistance(pt1);
+    console.log(`Initial Distance ${distanceBetweenTouches}`);
+
     return false;
+}
+function handle_pinch_zoom(ev) {
+    //console.log(`Changed touches = ${ev.changedTouches.length}`);
+    //if (ev.targetTouches.length == 2 && ev.changedTouches.length == 2) {
+    if (touchCount == 2) {
+        // Check if the two target touches are the same ones that started
+        // the 2-touch
+        let point1 = -1, point2 = -1;
+        // for (var i = 0; i < tpCache.length; i++) {
+        //     if (tpCache[i].identifier == ev.targetTouches[0].identifier) point1 = i;
+        //     if (tpCache[i].identifier == ev.targetTouches[1].identifier) point2 = i;
+        // }
+        point1 = 1; 
+        point2 = 1;
+        if (point1 >= 0 && point2 >= 0) {
+            // Calculate the difference between the start and move coordinates
+            let pt0 = new Point(ev.targetTouches[0].clientX, ev.targetTouches[0].clientY);
+            let pt1 = new Point(ev.targetTouches[1].clientX, ev.targetTouches[1].clientY);
+            let touchDistancDiff = distanceBetweenTouches - pt0.getDistance(pt1);
+            if (Math.abs(touchDistancDiff) > 5) {
+                pinching = true;
+            }
+            if (pinching) {
+                view.matrix.scale(1+touchDistancDiff*.0001,pzstartPoint);
+                if(touchDistancDiff > 1) {
+                console.log(`zoom in ${touchDistancDiff}`);
+                } 
+                if(touchDistancDiff < 0) {
+                console.log(`zoom out ${touchDistancDiff}`);
+                } 
+            }
+        }
+    }
 }
 function canvasInit() {
     console.log("start canvas Init");

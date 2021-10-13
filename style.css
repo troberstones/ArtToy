@@ -1,0 +1,155 @@
+.uicontainer {
+        -webkit-user-select: none;
+    user-select:none;
+    pointer-events: fill;
+    left:0px;
+}    
+.svgButton:hover {
+    cursor:crosshair; 
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.4));
+}
+html,
+body {
+    background-color:rgb(121, 132, 136);
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Scale canvas with resize attribute to full size */
+canvas[resize] {
+    width: 100%;
+    height: 100%;
+    border-color: black;
+        -webkit-user-select: none;
+    user-select: none;
+    touch-action: none;
+}
+.drawsurface {
+   position: absolute;
+   top:50px;
+   left:50px;
+   z-index:1;
+   touch-action: none;
+} 
+
+.uisurface{
+    position: absolute;
+    top:50px;
+    left:50px;
+    width:150;
+    height:150;
+    z-index: 100;
+   touch-action: none;
+}
+.layerui {
+    position: absolute;
+    bottom:10px;
+    left:5px;
+    z-index: 90;
+}
+.colorPicker{
+    position: absolute;
+    right:1%;
+    top:10%;
+    width:200px;
+    height:150px;
+        -webkit-user-select: none;
+    user-select: none;
+    z-index: 100;
+   touch-action: none;
+}
+.sliderGroup {
+        height: 30%;
+        width: 100%;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    .rangeslider {
+        border-top: 10px;
+        background-color: rgb(65, 65, 65);
+        width: 100%;
+        height: 25%;
+        -webkit-user-select: none;
+        user-select: none;
+        touch-action: none;
+    }
+    .rangeslider > canvas {
+        height: 2rem;
+        width: 100%;
+        border-radius: 12px;
+        margin-top: 15px;
+        -webkit-user-select: none;
+        user-select: none;
+        touch-action: none;
+    }
+    .palette {
+        position: absolute;
+        z-index: 0;
+        -webkit-user-select: none;
+        user-select: none;
+        /*border: 1px solid black;*/
+        touch-action: none;
+    }
+    .paletteOverlay {
+        position: absolute;
+        z-index: 1;
+        pointer-events: none;
+        -webkit-user-select: none;
+        user-select: none;
+        touch-action: none;
+    }
+
+    #paletteWrapper {
+        position: relative;
+        width: 200px;
+        height: 300px;
+        display: block;
+        /*background-color: azure;*/
+        min-height: 200px;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    .colorManip {
+        display: block;
+    }
+
+    .round-corner {
+        border-radius: 12px;
+    }
+
+    .one-edge-shadow {
+        box-shadow: 0 8px 6px -6px black;
+    }
+    .datareadout {
+        background-color: rgb(174, 174, 211);
+        font-size: 8pt;
+        display: inline;
+        -webkit-user-select: none;
+        user-select: none;
+        display: none;
+    }
+
+    .colorslider {
+        display: block;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    .selectedColor {
+        outline-width: 2px;
+        outline-color: black;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+    .textlabel {
+        -webkit-user-select: none;
+        user-select: none;
+        color: white;
+        justify-content: center;
+    }
+    #Artboard1 {
+        viewport-fit: true;
+    }
+    
