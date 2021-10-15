@@ -60,6 +60,7 @@ var distanceBetweenTouches = null;
 var pinching = false;
 var panning = false;
 var pzstartPoint = null;
+var pzstartPoint2 = null;
 var pzstartMatrixPt = null
 function handle_two_touches(ev) {
     console.log("two touches");
@@ -69,7 +70,9 @@ function handle_two_touches(ev) {
     //}
     let pt0 = new Point(ev.targetTouches[0].clientX,ev.targetTouches[0].clientY);
     let pt1 = new Point(ev.targetTouches[1].clientX,ev.targetTouches[1].clientY);
-    pzstartPoint = pt0;
+    pzstartPoint = view.getEventPoint(ev.targetTouches[0]);
+    pzstartPoint2 = view.getEventPoint(ev.targetTouches[1]);
+    console.log(pzstartPoint,pzstartPoint2);
     pzstartMatrixPt = new Point(view.matrix.tx, view.matrix.ty);
 
     distanceBetweenTouches = pt0.getDistance(pt1);
