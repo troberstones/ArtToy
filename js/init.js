@@ -102,7 +102,7 @@ function handle_pinch_zoom(ev) {
                 pinching = true;
             }
             if (pinching) {
-                view.matrix.scale(1+touchDistancDiff*.0001,pzstartPoint);
+                view.matrix.scale(1+touchDistancDiff*-.0001,pzstartPoint);
                 if(touchDistancDiff > 1) {
                 console.log(`zoom in ${touchDistancDiff}`);
                 } 
@@ -110,8 +110,20 @@ function handle_pinch_zoom(ev) {
                 console.log(`zoom out ${touchDistancDiff}`);
                 } 
             }
+            
+        
         }
     }
+}
+function resetPointPositions(ev) {
+    // Try working with deltas instead of abs result
+    let pt0 = new Point(ev.targetTouches[0].clientX, ev.targetTouches[0].clientY);
+    let pt1 = new Point(ev.targetTouches[1].clientX, ev.targetTouches[1].clientY);
+    pzstartPoint = view.getEventPoint(ev.targetTouches[0]);
+    pzstartPoint2 = view.getEventPoint(ev.targetTouches[1]);
+    console.log(pzstartPoint, pzstartPoint2);
+    pzstartMatrixPt = new Point(view.matrix.tx, view.matrix.ty);
+    distanceBetweenTouches = pt0.getDistance(pt1);
 }
 function canvasInit() {
     console.log("start canvas Init");
