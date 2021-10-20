@@ -80,7 +80,7 @@ function handle_two_touches(ev) {
     pzstartPoint2 = view.getEventPoint(ev.targetTouches[1]);
     //console.log(pzstartPoint,pzstartPoint2);
     pzstartMatrixPt = new Point(view.matrix.tx, view.matrix.ty);
-    let ref = new Point(-1,-1);
+    let ref = new Point(-1,0);
     StartVectorOrig = pt0-pt1;
     StartVector = StartVectorOrig.normalize();
     tan = StartVector.cross(ref);
@@ -109,21 +109,33 @@ function handle_pinch_zoom(ev) {
             let pt0 = new Point(ev.targetTouches[0].clientX, ev.targetTouches[0].clientY);
             let pt1 = new Point(ev.targetTouches[1].clientX, ev.targetTouches[1].clientY);
             let touchDistancDiff = distanceBetweenTouches - pt0.getDistance(pt1);
-            let CurVector = pt0-pt1;
-            let row1 = tan.dot(CurVector) 
+            let CurVectora = pt0-pt1;
+            let row1a = tan.dot(CurVectora) 
 
+            let ref = new Point(-1, 0);
+            let CurVectorOrig = pt0 - pt1;
+            let CurVector = StartVectorOrig.normalize();
+            let ctan = CurVector.cross(ref);
+            let cbitan = CurVector.cross(ctan);
+            //StartMatrix = view.matrix;
+            let CurBetweenTouches = pt0.getDistance(pt1);
+            let row1 = tan * ctan.dot(tan)+cbitan.dot(tan);
+            let row2 = bitan * ctan.dot(bitan)+cbitan.dot(bitan);
+
+            let xfmat = new Matrix(row1.x, row1.y,row2.x,row2.y,0,0);
             if (Math.abs(touchDistancDiff) > 5) {
+                view.matrix = StartMatrix*xfmat;
                 pinching = true;
             }
-            if (pinching) {
-                view.matrix.scale(1+touchDistancDiff*-.0001,pzstartPoint);
-                if(touchDistancDiff > 1) {
-                console.log(`zoom in ${touchDistancDiff}`);
-                } 
-                if(touchDistancDiff < 0) {
-                console.log(`zoom out ${touchDistancDiff}`);
-                } 
-            }
+            // if (pinching) {
+            //     view.matrix.scale(1+touchDistancDiff*-.0001,pzstartPoint);
+            //     if(touchDistancDiff > 1) {
+            //     console.log(`zoom in ${touchDistancDiff}`);
+            //     } 
+            //     if(touchDistancDiff < 0) {
+            //     console.log(`zoom out ${touchDistancDiff}`);
+            //     } 
+            // }
             
         
         }
