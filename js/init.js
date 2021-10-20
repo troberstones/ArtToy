@@ -61,7 +61,13 @@ var pinching = false;
 var panning = false;
 var pzstartPoint = null;
 var pzstartPoint2 = null;
-var pzstartMatrixPt = null
+var pzstartMatrixPt = null;
+var StartVector = null;
+var StartVectorOrig = null;
+var StartMatrix = null;
+var tan = null;
+var bitan = null;
+
 function handle_two_touches(ev) {
     console.log("two touches");
     //for (var i = 0; i < ev.targetTouches.length; i++) {
@@ -72,9 +78,14 @@ function handle_two_touches(ev) {
     let pt1 = new Point(ev.targetTouches[1].clientX,ev.targetTouches[1].clientY);
     pzstartPoint = view.getEventPoint(ev.targetTouches[0]);
     pzstartPoint2 = view.getEventPoint(ev.targetTouches[1]);
-    console.log(pzstartPoint,pzstartPoint2);
+    //console.log(pzstartPoint,pzstartPoint2);
     pzstartMatrixPt = new Point(view.matrix.tx, view.matrix.ty);
-
+    let ref = new Point(-1,-1);
+    StartVectorOrig = pt0-pt1;
+    StartVector = StartVectorOrig.normalize();
+    tan = StartVector.cross(ref);
+    bitan = StartVector.cross(tan); 
+    StartMatrix = view.matrix; 
     distanceBetweenTouches = pt0.getDistance(pt1);
     console.log(`Initial Distance ${distanceBetweenTouches}`);
 
@@ -98,6 +109,9 @@ function handle_pinch_zoom(ev) {
             let pt0 = new Point(ev.targetTouches[0].clientX, ev.targetTouches[0].clientY);
             let pt1 = new Point(ev.targetTouches[1].clientX, ev.targetTouches[1].clientY);
             let touchDistancDiff = distanceBetweenTouches - pt0.getDistance(pt1);
+            let CurVector = pt0-pt1;
+            let row1 = tan.dot(CurVector) 
+
             if (Math.abs(touchDistancDiff) > 5) {
                 pinching = true;
             }
