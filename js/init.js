@@ -67,7 +67,8 @@ var StartVectorOrig = null;
 var StartMatrix = null;
 var tan = null;
 var bitan = null;
-
+var testVector = null;
+var testCircle = null;
 function handle_two_touches(ev) {
     console.log("two touches");
     //for (var i = 0; i < ev.targetTouches.length; i++) {
@@ -90,7 +91,8 @@ function handle_two_touches(ev) {
     StartMatrix = view.matrix; 
     distanceBetweenTouches = pt0.getDistance(pt1);
     console.log(`Initial Distance ${distanceBetweenTouches}`);
-
+    testCircle = new Circle(pzstartPoint,20);
+    testCircle.fill = "green";
     return false;
 }
 function handle_pinch_zoom(ev) {
@@ -132,6 +134,7 @@ function handle_pinch_zoom(ev) {
                 view.matrix = StartMatrix*xfmat;
                 pinching = true;
             }
+            testCircle.position = view.getEventPoint(ev.targetTouches[0]);
             // if (pinching) {
             //     view.matrix.scale(1+touchDistancDiff*-.0001,pzstartPoint);
             //     if(touchDistancDiff > 1) {
