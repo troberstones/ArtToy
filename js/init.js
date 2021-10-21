@@ -83,8 +83,10 @@ function handle_two_touches(ev) {
     let ref = new Point(-1,0);
     StartVectorOrig = pt0-pt1;
     StartVector = StartVectorOrig.normalize();
-    tan = StartVector.cross(ref);
-    bitan = StartVector.cross(tan); 
+    tan = StartVector;
+    bitan = new Point(-StartVector.y,StartVector.x);
+    // tan = StartVector.cross(ref);
+    // bitan = StartVector.cross(tan); 
     StartMatrix = view.matrix; 
     distanceBetweenTouches = pt0.getDistance(pt1);
     console.log(`Initial Distance ${distanceBetweenTouches}`);
@@ -115,8 +117,11 @@ function handle_pinch_zoom(ev) {
             let ref = new Point(-1, 0);
             let CurVectorOrig = pt0 - pt1;
             let CurVector = StartVectorOrig.normalize();
-            let ctan = CurVector.cross(ref);
-            let cbitan = CurVector.cross(ctan);
+            // let ctan = CurVector.cross(ref);
+            // let cbitan = CurVector.cross(ctan);
+            let ctan = CurVector;
+            let cbitan = new Point(-CurVector.y,CurVector.x);
+
             //StartMatrix = view.matrix;
             let CurBetweenTouches = pt0.getDistance(pt1);
             let row1 = tan * ctan.dot(tan)+cbitan.dot(tan);
