@@ -81,7 +81,6 @@ function handle_two_touches(ev) {
     pzstartPoint2 = view.getEventPoint(ev.targetTouches[1]);
     //console.log(pzstartPoint,pzstartPoint2);
     pzstartMatrixPt = new Point(view.matrix.tx, view.matrix.ty);
-    let ref = new Point(-1,0);
     StartVectorOrig = pt0.subtract(pt1);
     StartVector = StartVectorOrig.normalize();
     tan = StartVector;
@@ -91,7 +90,7 @@ function handle_two_touches(ev) {
     StartMatrix = view.matrix; 
     distanceBetweenTouches = pt0.getDistance(pt1);
     console.log(`Initial Distance ${distanceBetweenTouches}`);
-    testCircle = new Circle(pzstartPoint,20);
+    testCircle = new Path.Circle(pzstartPoint,20);
     testCircle.fill = "green";
     return false;
 }
@@ -116,22 +115,19 @@ function handle_pinch_zoom(ev) {
             let CurVectora = pt0.subtract(pt1);
             let row1a = tan.dot(CurVectora) 
 
-            let ref = new Point(-1, 0);
-            let CurVectorOrig = pt0 - pt1;
-            let CurVector = StartVectorOrig.normalize();
-            // let ctan = CurVector.cross(ref);
-            // let cbitan = CurVector.cross(ctan);
+            let CurVector = CurVectora.normalize();
             let ctan = CurVector;
             let cbitan = new Point(-CurVector.y,CurVector.x);
 
             //StartMatrix = view.matrix;
             let CurBetweenTouches = pt0.getDistance(pt1);
-            let row1 = tan * ctan.dot(tan)+cbitan.dot(tan);
-            let row2 = bitan * ctan.dot(bitan)+cbitan.dot(bitan);
+            let row1 = tan.multiply(ctan.dot(tan)+cbitan.dot(tan));
+            let row2 = bitan.multiply(ctan.dot(bitan)+cbitan.dot(bitan));
 
             let xfmat = new Matrix(row1.x, row1.y,row2.x,row2.y,0,0);
             if (Math.abs(touchDistancDiff) > 5) {
-                view.matrix = StartMatrix*xfmat;
+                view.matrix = StartMatrix;
+                view.matrix.append(xfmat);
                 pinching = true;
             }
             testCircle.position = view.getEventPoint(ev.targetTouches[0]);
