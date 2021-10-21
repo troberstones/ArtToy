@@ -81,7 +81,7 @@ function handle_two_touches(ev) {
     //console.log(pzstartPoint,pzstartPoint2);
     pzstartMatrixPt = new Point(view.matrix.tx, view.matrix.ty);
     let ref = new Point(-1,0);
-    StartVectorOrig = pt0-pt1;
+    StartVectorOrig = pt0.subtract(pt1);
     StartVector = StartVectorOrig.normalize();
     tan = StartVector.cross(ref);
     bitan = StartVector.cross(tan); 
@@ -109,7 +109,7 @@ function handle_pinch_zoom(ev) {
             let pt0 = new Point(ev.targetTouches[0].clientX, ev.targetTouches[0].clientY);
             let pt1 = new Point(ev.targetTouches[1].clientX, ev.targetTouches[1].clientY);
             let touchDistancDiff = distanceBetweenTouches - pt0.getDistance(pt1);
-            let CurVectora = pt0-pt1;
+            let CurVectora = pt0.subtract(pt1);
             let row1a = tan.dot(CurVectora) 
 
             let ref = new Point(-1, 0);
