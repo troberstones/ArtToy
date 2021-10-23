@@ -22,19 +22,19 @@ function initCanvasTouchEvent(someElement) {
     someElement.addEventListener('touchend', processs_touchend, false);
 }
 function processs_touchmove(ev) {
-    console.log("touchmove");
+    //console.log("touchmove");
     handle_pinch_zoom(ev);
 }
 
 function processs_touchcanel(ev) {
-    console.log("touchcancel");
+    //console.log("touchcancel");
     touchCount = ev.touches.length;
     pinching = false;
     panning = false;
 }
 var lastTool = null;
 function processs_touchend(ev) {
-    console.log("touchend");
+    //console.log("touchend");
     touchCount = ev.touches.length;
     if(lastTool) {
         lastTool.activate();
