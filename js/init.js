@@ -29,8 +29,6 @@ function processs_touchmove(ev) {
 function processs_touchcanel(ev) {
     //console.log("touchcancel");
     touchCount = ev.touches.length;
-    pinching = false;
-    panning = false;
 }
 var lastTool = null;
 function processs_touchend(ev) {
@@ -39,8 +37,6 @@ function processs_touchend(ev) {
     if(lastTool) {
         lastTool.activate();
     }
-    pinching = false;
-    panning = false;
 }
 // touchstart handler
 function process_touchstart(ev) {
@@ -58,25 +54,15 @@ function handle_one_touch(ev) {
     return false;
 }
 var tpCache = new Array();
-var touchCount = 0;
-var distanceBetweenTouches = null;
-var pinching = false;
-var panning = false;
 var pzstartPoint = null;
 var pzstartPoint2 = null;
 var pzstartMatrixPt = null;
 var StartVector = null;
 var StartVectorOrig = null;
-var StartMatrix = null;
-var tan = null;
-var bitan = null;
-var testVector = null;
-var testCircle = null;
 var tpt0 = null;
 var tpt1 = null;
 var tvec0 = null;
 var _startPoint = null;
-var scaleReference = null;
 var StartMatrixScale = null;
 function handle_two_touches(ev) {
     console.log("two touches");
@@ -102,19 +88,10 @@ function handle_two_touches(ev) {
     pzstartMatrixPt = new Point(view.matrix.tx, view.matrix.ty);
     StartVectorOrig = pzstartPoint.subtract(pzstartPoint2);
     StartVector = StartVectorOrig.normalize();
-    //tan = StartVector;
-    //bitan = new Point(-StartVector.y,StartVector.x);
-    // tan = StartVector.cross(ref);
-    // bitan = StartVector.cross(tan); 
-    StartMatrix = view.matrix; 
     StartMatrixScale = view.matrix.scaling;
-    let ReferencedistanceBetweenTouches = pzstartPoint.getDistance(pzstartPoint2);
     distanceBetweenTouches = pt0.getDistance(pt1);
-    scaleReference = distanceBetweenTouches/ReferencedistanceBetweenTouches;
 
     //console.log(`Initial Distance ${distanceBetweenTouches}`);
-    testCircle = new Path.Circle(pzstartPoint,20);
-    testCircle.fill = "green";
     return false;
 }
 
@@ -154,14 +131,9 @@ function handle_pinch_zoom(ev) {
             tvec0 = curvec; 
 
             if (pt1Movement < pt2Movement) {
-                let pt1MovementVs = view.projectToView(tpt0).subtract(view.projectToView(pt0));
                 view.matrix.rotate(rotAngle, curStartPoint);
-                //view.matrix.translate(pt1MovementVs);
             } else {
-                let pt1MovementVs = view.projectToView(tpt1).subtract(view.projectToView(pt1));
-
                 view.matrix.rotate(rotAngle, curStartPoint2);
-                //view.matrix.translate(pt1MovementVs);
             }
             //let curDistanceBetweenTouches = pzstartPoint.getDistance(pzstartPoint2);
             let curDistanceBetweenTouches = pt0.getDistance(pt1);
@@ -191,22 +163,11 @@ function handle_pinch_zoom(ev) {
                 view.matrix.ty += ptDelta.y;
             }
             _startPoint = pt0;
-            pinching = true;
             
         
         }
     }
     return true;
-}
-function resetPointPositions(ev) {
-    // Try working with deltas instead of abs result
-    let pt0 = new Point(ev.targetTouches[0].clientX, ev.targetTouches[0].clientY);
-    let pt1 = new Point(ev.targetTouches[1].clientX, ev.targetTouches[1].clientY);
-    pzstartPoint = view.getEventPoint(ev.targetTouches[0]);
-    pzstartPoint2 = view.getEventPoint(ev.targetTouches[1]);
-    console.log(pzstartPoint, pzstartPoint2);
-    pzstartMatrixPt = new Point(view.matrix.tx, view.matrix.ty);
-    distanceBetweenTouches = pt0.getDistance(pt1);
 }
 function canvasInit() {
     console.log("start canvas Init");

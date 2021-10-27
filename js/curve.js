@@ -43,6 +43,11 @@ function filledRegister() {
 
 	function onMouseDown(event) {
 		path = new Path();
+		path.selected = true; 
+
+		let viewMatrixScaling= view.matrix.scaling;
+		curveTool.minDistance =  10 / viewMatrixScaling.x;
+
 
 		//path.style = {
 		//	fillColor: new Color(1, 0, 0),
@@ -67,27 +72,29 @@ function filledRegister() {
 		path.add(event.point);
 	}
 	curveTool.onMouseUp = function (event) {
-		path.simplify(1);
-		//path.selected = true;
+		let viewMatrixScaling= view.matrix.scaling;
+		let simplifyAmt = 1/ viewMatrixScaling.x;
+		path.simplify(simplifyAmt);
+		path.selected = true;
 	}
 	curveTool.activate()
 }
-function polylineVersionfilledRegister() {
-    console.log("registerCurvetool");
-	var path;
-	function onMouseDown(event) {
-		path = new Path();
-		path.strokeColor = 'black';
-		path.add(event.point);
-	}
+// function polylineVersionfilledRegister() {
+//     console.log("registerCurvetool");
+// 	var path;
+// 	function onMouseDown(event) {
+// 		path = new Path();
+// 		path.strokeColor = 'black';
+// 		path.add(event.point);
+// 	}
 
-	curveTool = new Tool();
-	curveTool.minDistance = 30;
-	curveTool.onMouseDown = onMouseDown;
+// 	curveTool = new Tool();
+// 	curveTool.minDistance = 30;
+// 	curveTool.onMouseDown = onMouseDown;
 
-	curveTool.onMouseDrag = function (event) {
-			// Use the arcTo command to draw cloudy lines
-			//path.arcTo(event.point);
-            path.add(event.point);
-		}
-}
+// 	curveTool.onMouseDrag = function (event) {
+// 			// Use the arcTo command to draw cloudy lines
+// 			//path.arcTo(event.point);
+//             path.add(event.point);
+// 		}
+// }
