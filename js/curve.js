@@ -43,7 +43,7 @@ function filledRegister() {
 
 	function onMouseDown(event) {
 		path = new Path();
-		path.selected = true; 
+		// path.selected = true; 
 
 		let viewMatrixScaling= view.matrix.scaling;
 		curveTool.minDistance =  10 / viewMatrixScaling.x;
@@ -75,7 +75,7 @@ function filledRegister() {
 		let viewMatrixScaling= view.matrix.scaling;
 		let simplifyAmt = 1/ viewMatrixScaling.x;
 		path.simplify(simplifyAmt);
-		path.selected = true;
+		// path.selected = true;
 	}
 	curveTool.activate()
 }
